@@ -1,0 +1,132 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.priceLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.priceInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priceInput {
+  width: 90px;
+  padding: 7px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.priceInput:focus {
+  border-color: var(--color-accent);
+}
+
+.priceUnit {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.empty {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table thead {
+  background: var(--color-surface);
+}
+
+.table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.thRight {
+  text-align: right !important;
+}
+
+.thAction {
+  width: 80px;
+  text-align: center !important;
+}
+
+.table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--color-surface-hover);
+}
+
+.tdLabel {
+  font-weight: 500;
+}
+
+.tdRight {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tdAction {
+  text-align: center;
+}
+
+.pdfBtn {
+  padding: 5px 12px;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.pdfBtn:hover {
+  background: var(--color-accent);
+  color: #fff;
+}

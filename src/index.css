@@ -4,8 +4,40 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Colors */
+  --color-bg: #0f1117;
+  --color-surface: #161b27;
+  --color-surface-hover: #1e2535;
+  --color-border: #252d3d;
+  --color-text: #e2e8f0;
+  --color-text-muted: #64748b;
+  --color-accent: #6366f1;
+  --color-accent-hover: #4f52d9;
+  --color-danger: #ef4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.1);
+  --color-warning: #f59e0b;
+
+  /* Border radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
 body {
-  background: #1a1a2e;
-  color: #eee;
-  font-family: sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: "Geist", "Geist Mono", ui-monospace, "Cascadia Code", "Source Code Pro",
+    Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+input {
+  font-family: inherit;
 }

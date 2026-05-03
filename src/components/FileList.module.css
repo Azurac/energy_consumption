@@ -1,0 +1,117 @@
+.wrapper {
+  width: 100%;
+}
+
+.empty {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 24px;
+  margin: 0;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table thead {
+  background: var(--color-surface);
+}
+
+.table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--color-surface-hover);
+}
+
+.thFile {
+  min-width: 160px;
+}
+
+.thId {
+  min-width: 120px;
+  text-align: right !important;
+}
+
+.thAction {
+  width: 40px;
+}
+
+.tdFile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.month {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.fileName {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.tdValue {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.missing {
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+.tdAction {
+  text-align: center;
+}
+
+.removeBtn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeBtn:hover {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
