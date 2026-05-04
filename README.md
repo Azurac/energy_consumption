@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# Zadání — Aplikace pro zpracování spotřeby energie
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Technologie
+TypeScript + React, čistě klientská aplikace (žádný backend). Stav se neuchovává mezi obnoveními stránky.
 
-Currently, two official plugins are available:
+## Vstupní soubor
+- Formát: CSV, oddělovač středník
+- Desetinný oddělovač: čárka
+- Příklad řádku: `01.04.2026;10:15;10:30;0,02;0,01`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Sloupce
+| Datum | Čas od | Čas do | SourceId-TargetId1 | SourceId-TargetId2 | … |
+|-------|--------|--------|--------------------|--------------------|---|
 
-## React Compiler
+- Sloupec `SourceId-TargetId` je vždy alespoň jeden, může jich být více.
+- Každý soubor obsahuje data z jednoho měsíce.
+- Zpracovaný výstup: datum + součet spotřeby za měsíc, pro každý identifikátor zvlášť.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Funkce aplikace
 
-## Expanding the ESLint configuration
+### Načítání souborů
+- Soubory lze přidávat **drag & drop**, postupně i více najednou.
+- **Konflikt (stejný měsíc):**
+  - Pokud jsou data identická → zobrazí se pouze informační upozornění.
+  - Pokud jsou data odlišná → zobrazí se varování s názvem souboru, měsíční výsledky obou verzí (stávající vs. nový), a uživatel si zvolí, zda přepsat nebo ponechat stávající.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Identifikátory
+- Každý unikátní identifikátor (`SourceId-TargetId`) se zobrazí v tabulce aliasů.
+- Uživatel může přiřadit alias (pro zobrazení místo surového identifikátoru).
+- Identifikátory se mohou lišit soubor od souboru (přibývají/ubývají), ale každý, který se někdy vyskytl, bude v tabulce aliasů a bude mít svou řadu v grafu.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Zobrazení dat
+Přepínatelné mezi dvěma módy:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Seznam:**
+- Řádky: soubor / měsíc, měsíční hodnoty pro každý identifikátor, křížek pro odebrání souboru.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Graf:**
+- Skládaný sloupcový graf.
+- Osa X: měsíce, osa Y: spotřeba v kWh.
+- Každý identifikátor = jedna série (barva). Graf nemusí být spojitý.
+- Legenda používá alias (pokud je nastaven), jinak surový identifikátor.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Cena za jednotku
+- Uživatel zadá cenu za kWh (výchozí: 1 Kč/kWh).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Souhrn
+- Pro každý identifikátor
+  - celková spotřeba za všechna načtená období
+  - přepočet přes cenu za jednotku
+  - tlačítko pro export PDF
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Výstupní soubor — PDF
+- Použitý PDF font musí podporovat českou znakovou sadu
+- **Obsah PDF:**
+  - Titulek: `Spotřeba energie <id nebo alias>`
+  - Podtitulek: `pro období <dd.MM.YYYY> - <dd.MM.YYYY>`
+    - nejstarší a nejnovější měsíc v datech daného identifikátoru
+  - Tabulka:
+    - Sloupečky:
+      - Měsíc
+      - Spotřeba [kWh]
+      - Cena [Kč]
+    - "Neuvedeno" pro měsíce uprostřed intervalu, které nemají žádná data daného identifikátoru
+    - Poznámka pod tabulkou: cena za jednotku použitá při výpočtu.
+  - Souhrn: celková spotřeba a celková cena.
