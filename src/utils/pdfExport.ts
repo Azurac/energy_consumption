@@ -2,6 +2,9 @@ import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { type ParsedFile, type IdentifierAlias, type IdentifierId } from "../types";
 import { formatYearMonthLabel } from "./csvParser";
+import regularFontUrl from '@/assets/fonts/LiberationSans-Regular.ttf';
+import boldFontUrl from '@/assets/fonts/LiberationSans-Bold.ttf';
+import italicFontUrl from '@/assets/fonts/LiberationSans-Italic.ttf';
 
 const PAGE_WIDTH_MM = 210;
 const PAGE_HEIGHT_MM = 297;
@@ -44,18 +47,19 @@ interface Fonts {
   italic: Awaited<ReturnType<PDFDocument["embedFont"]>>;
 }
 
-async function fetchFontBytes(filename: string): Promise<ArrayBuffer> {
-  const res = await fetch(`/fonts/${filename}`);
-  if (!res.ok) throw new Error(`Font fetch failed: ${filename} (${res.status})`);
+async function fetchFontBytes(url: string): Promise<ArrayBuffer> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Font fetch failed: ${url} (${res.status})`);
   return res.arrayBuffer();
 }
 
 async function loadFonts(doc: PDFDocument): Promise<Fonts> {
   const [regBuf, boldBuf, italicBuf] = await Promise.all([
-    fetchFontBytes("LiberationSans-Regular.ttf"),
-    fetchFontBytes("LiberationSans-Bold.ttf"),
-    fetchFontBytes("LiberationSans-Italic.ttf"),
+    fetchFontBytes(regularFontUrl),
+    fetchFontBytes(boldFontUrl),
+    fetchFontBytes(italicFontUrl),
   ]);
+
   return {
     regular: await doc.embedFont(regBuf),
     bold: await doc.embedFont(boldBuf),
