@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useAppState } from "../store/AppContext";
 import { exportToPDF } from "../utils/pdfExport";
 import styles from "./Summary.module.css";
@@ -5,6 +6,8 @@ import styles from "./Summary.module.css";
 export function Summary() {
   const { state, dispatch } = useAppState();
   const { files, aliases, pricePerKwh } = state;
+  // Track which identifier is currently exporting
+  const [exportingId, setExportingId] = useState<string | null>(null);
 
   const allIds = [...new Set(files.flatMap(f => Object.keys(f.consumption)))];
 
@@ -24,12 +27,17 @@ export function Summary() {
     }
   };
 
-  const handleExport = (id: string) => {
-    if (!window.jspdf) {
-      alert("PDF knihovna se načítá, zkuste za chvíli znovu.");
-      return;
+  const handleExport = async (id: string) => {
+    if (exportingId) return;
+    setExportingId(id);
+    try {
+      await exportToPDF(id, files, aliases, pricePerKwh);
+    } catch (e) {
+      alert("Export se nezdařil. Zkontrolujte připojení k internetu.");
+      console.error(e);
+    } finally {
+      setExportingId(null);
     }
-    exportToPDF(id, files, aliases, pricePerKwh);
   };
 
   return (
@@ -68,6 +76,7 @@ export function Summary() {
             <tbody>
               {allIds.map(id => {
                 const total = totalConsumption(id);
+                const isExporting = exportingId === id;
                 return (
                   <tr key={id}>
                     <td className={styles.tdLabel}>{resolveLabel(id)}</td>
@@ -81,9 +90,10 @@ export function Summary() {
                       <button
                         className={styles.pdfBtn}
                         onClick={() => handleExport(id)}
+                        disabled={exportingId !== null}
                         title={`Exportovat PDF pro ${resolveLabel(id)}`}
                       >
-                        PDF ↓
+                        {isExporting ? "..." : "PDF ↓"}
                       </button>
                     </td>
                   </tr>
