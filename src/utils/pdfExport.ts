@@ -30,8 +30,8 @@ const HEADER_HEIGHT = 16;
 
 // Column X positions in points
 const COL_MONTH_X = MARGIN;
-const COL_KWH_X = MARGIN + 140;
-const COL_PRICE_X = MARGIN + 310;
+const COL_KWH_X = MARGIN + CONTENT_WIDTH / 3;
+const COL_PRICE_X = MARGIN + 2 * CONTENT_WIDTH / 3;
 
 // Colors (pdf-lib uses 0–1 range)
 const COLOR_DARK = rgb(0.078, 0.078, 0.078);
@@ -175,13 +175,14 @@ export async function exportToPDF(
   y -= SUBTITLE_SIZE + LINE_GAP + 8;
 
   drawRule(page, y);
-  y -= 10;
+  y -= 15;
+
 
   // Table header background
   ensureSpace(HEADER_HEIGHT + ROW_HEIGHT);
   page.drawRectangle({
     x: MARGIN,
-    y: y - HEADER_HEIGHT + 4,
+    y: y - HEADER_HEIGHT + 10,
     width: CONTENT_WIDTH,
     height: HEADER_HEIGHT,
     color: COLOR_HEADER_BG,
@@ -206,7 +207,7 @@ export async function exportToPDF(
     if (rowIndex % 2 === 0) {
       page.drawRectangle({
         x: MARGIN,
-        y: y - ROW_HEIGHT + 4,
+        y: y - ROW_HEIGHT + 10,
         width: CONTENT_WIDTH,
         height: ROW_HEIGHT,
         color: COLOR_ROW_ALT,
@@ -237,7 +238,7 @@ export async function exportToPDF(
   y -= NOTE_SIZE + LINE_GAP + 8;
 
   drawRule(page, y);
-  y -= 12;
+  y -= 18;
 
   // Summary heading
   page.drawText("Souhrn", { x: MARGIN, y, size: SUMMARY_LABEL_SIZE, font: fonts.bold, color: COLOR_DARK });
