@@ -6,12 +6,12 @@
 
 :root {
   /* Colors */
-  --color-bg: #0f1117;
-  --color-surface: #161b27;
-  --color-surface-hover: #1e2535;
+  --color-bg: #000000;
+  --color-surface: #12151f;
+  --color-surface-hover: #1c2231;
   --color-border: #252d3d;
   --color-text: #e2e8f0;
-  --color-text-muted: #64748b;
+  --color-text-muted: #73859f;
   --color-accent: #6366f1;
   --color-accent-hover: #4f52d9;
   --color-danger: #ef4444;
