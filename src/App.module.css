@@ -6,7 +6,7 @@
 }
 
 .header {
-  padding: 40px 0 32px;
+  padding: 40px 0 16px;
   border-bottom: 1px solid var(--color-border);
   margin-bottom: 32px;
 }
@@ -28,5 +28,5 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }

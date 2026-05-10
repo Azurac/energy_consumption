@@ -7,7 +7,7 @@
 }
 
 .btn {
-  padding: 5px 14px;
+  padding: 4px 14px;
   border: none;
   border-radius: calc(var(--radius-sm) - 2px);
   background: transparent;

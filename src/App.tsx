@@ -17,7 +17,7 @@ function AppContent() {
     <div className={styles.layout}>
       <header className={styles.header}>
         <h1 className={styles.appTitle}>Spotřeba energie</h1>
-        <p className={styles.appSubtitle}>Zpracování a přehled dat ze CSV souborů</p>
+        <p className={styles.appSubtitle}>Zpracování a přehled dat z CSV souborů</p>
       </header>
 
       <main className={styles.main}>
